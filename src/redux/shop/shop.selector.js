@@ -8,7 +8,6 @@ export const shopSelector = createSelector([shopData], (collectionData) => {
   keys.forEach((key) => {
     mapData.push(collectionData[key]);
   });
-  console.log(mapData);
   return mapData;
 });
 
