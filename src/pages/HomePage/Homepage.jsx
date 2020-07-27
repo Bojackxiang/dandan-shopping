@@ -1,14 +1,12 @@
-import "./homepage.style.scss";
 import Directory from "../../components/Directory/Directory";
 import React from "react";
+import { HomePageWrapper } from "./home.styled";
 
 const Homepage = () => {
   return (
-    <div className="homepage">
-      <div className="directory-menu">
-        <Directory />
-      </div>
-    </div>
+    <HomePageWrapper>
+      <Directory />
+    </HomePageWrapper>
   );
 };
 

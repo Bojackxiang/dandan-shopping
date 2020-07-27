@@ -1,13 +1,10 @@
 import React from "react";
-import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import { selectedCollection } from "../../redux/shop/shop.selector";
 import "./collection.style.scss";
 import CollectionItem from "../../components/CollectionItem/Collectionitem";
 
 const CollectionPage = ({ match, collectionData }) => {
-  
-
   const categoryName = match.params.categoryId;
 
   return (

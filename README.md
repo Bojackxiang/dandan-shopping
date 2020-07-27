@@ -5,3 +5,5 @@
 
 `git push heroku master`
 
+只有在git commit之后才能 heroku code
+
