@@ -1,11 +1,15 @@
 import React from "react";
-import { CustomizedButton } from "./Button.style";
+import { CustomButtonContainer } from "./Button.style";
 
-const Button = ({ onClickHandler, text, inverted }) => {
+const Button = ({ onClickHandler, text, inverted, ...props }) => {
   return (
-    <CustomizedButton googleSignIn={false} onClick={onClickHandler}>
+    <CustomButtonContainer
+      googleSignIn={false}
+      onClick={onClickHandler}
+      {...props}
+    >
       {text}
-    </CustomizedButton>
+    </CustomButtonContainer>
   );
 };
 
