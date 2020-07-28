@@ -1,6 +1,10 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+  // addCollectionAndDocuments,
+} from "./firebase/firebase.utils";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { createStructuredSelector } from "reselect";
@@ -16,17 +20,21 @@ import SignUpPage from "./pages/SignUp/SignupPage";
 import Header from "./components/Header/Header";
 // style
 import "./App.css";
-
-
-
+import { shopSelector } from "./redux/shop/shop.selector";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const {
+      setCurrentUser,
+      // shop
+    } = this.props;
 
-    // -> 下面的基本上就是 subscriber，会一直监听
+    // -> add data to the firebase
+    // addCollectionAndDocuments('collections', shop)
+
+    // -> 后面的代码被赋值的时候就会被执行，以此来做subscribe和unsubscribe
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (authUser) => {
       if (authUser) {
         const userRef = await createUserProfileDocument(authUser);
@@ -60,31 +68,31 @@ class App extends React.Component {
     return (
       <>
         <Header />
-        <div style={{marginLeft: 20, marginRight: 20}}>
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route exact path="/signin" render={() => this.redirect()} />
-          <Route exact path="/signup" component={SignUpPage} />
-          <Route exact path="/checkout" component={CheckPage} />
-          <Route path="/shop" component={ShopPage} />
-        </Switch>
+        <div style={{ marginLeft: 20, marginRight: 20 }}>
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/signin" render={() => this.redirect()} />
+            <Route exact path="/signup" component={SignUpPage} />
+            <Route exact path="/checkout" component={CheckPage} />
+            <Route path="/shop" component={ShopPage} />
+          </Switch>
         </div>
-        
       </>
     );
   }
 }
 
-
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser, 
-  isCartDispaly: selectCartHidden
-})
+  currentUser: selectCurrentUser,
+  isCartDispaly: selectCartHidden,
+  shop: shopSelector,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
   // 这便是dispatch 了一个function
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 /**

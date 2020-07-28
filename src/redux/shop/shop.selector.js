@@ -1,6 +1,9 @@
 import { createSelector } from "reselect";
+import { SHOP_DATA } from "../../constants/shop";
 
-export const shopData = (state) => state.shop;
+export const shopData = (state) => {
+  return state.shop;
+};
 
 export const shopSelector = createSelector([shopData], (collectionData) => {
   let mapData = [];
@@ -8,16 +11,17 @@ export const shopSelector = createSelector([shopData], (collectionData) => {
   keys.forEach((key) => {
     mapData.push(collectionData[key]);
   });
+
   return mapData;
 });
 
-export const selectCollections = createSelector([shopData], (shop) => {
+export const selectCollections = createSelector([shopSelector], (shop) => {
   return shop;
 });
 
 export const selectedCollection = (collectionParam) => {
-  return createSelector([selectCollections], (shopData) => {
-    return shopData[collectionParam].items;
+  return createSelector([shopSelector], (shopData) => {
+    return SHOP_DATA[collectionParam].items;
   });
 };
 

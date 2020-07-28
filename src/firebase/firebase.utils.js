@@ -23,8 +23,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     
     return userRef
   }
-  
-  
+
   // 如果用户不存在，在firebase中创建一个用户
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
@@ -52,6 +51,45 @@ export const firestore = firebase.firestore();
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
+
+// -> signin with fire base 
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
+
+
+// -> add store data to firebase 
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = firestore.collection(collectionKey);
+
+  const batch = firestore.batch();
+  objectsToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+  });
+
+  return await batch.commit();
+};
+
+
+// -> 将 snapshot 获得的数据变成可读的数据
+export const convertCollectionsSnapshotToMap = collections => {
+  const transformedCollection = collections.docs.map(doc => {
+    const { title, items } = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    };
+  });
+
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+};
 
 export default firebase;

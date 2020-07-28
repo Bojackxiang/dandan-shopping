@@ -6,7 +6,7 @@ import CollectionItem from "../../components/CollectionItem/Collectionitem";
 
 const CollectionPage = ({ match, collectionData }) => {
   const categoryName = match.params.categoryId;
-
+  
   return (
     <div className="collection-page">
       <h2 className="title">{categoryName}</h2>

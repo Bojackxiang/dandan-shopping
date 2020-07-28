@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../Button/Button";
 import { connect } from "react-redux";
 import { addItemToCart } from "../../redux/cart/cart.action";
 import { selectCartItems } from "../../redux/cart/cart.selector";
