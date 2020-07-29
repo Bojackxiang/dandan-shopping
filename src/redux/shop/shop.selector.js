@@ -2,12 +2,14 @@ import { createSelector } from "reselect";
 import { SHOP_DATA } from "../../constants/shop";
 
 export const shopData = (state) => {
+  
   return state.shop;
 };
 
 export const shopSelector = createSelector([shopData], (collectionData) => {
+  
   let mapData = [];
-  const keys = Object.keys(collectionData);
+  const keys = Object.keys(collectionData.shop);
   keys.forEach((key) => {
     mapData.push(collectionData[key]);
   });

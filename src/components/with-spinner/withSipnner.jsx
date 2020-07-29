@@ -2,7 +2,7 @@ import React from "react";
 import { SpinnerContainer, SpinnerOverlay } from "./withspinner.styles";
 
 const WithSpinner = (WrapComponent) => {
-  console.log("WrapComponent: ", WrapComponent);
+  
 
   // 这个参数是从 withSpinner 里面传进来的
   const Spinner = ({ isLoading, ...otherProps }) => {
